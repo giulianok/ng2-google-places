@@ -18,16 +18,19 @@ gulp.task('watch', function () {
 
 /* Running...
 --------------------------------------------------- */
-gulp.task('default', function(callback) {
+gulp.task('build', function(callback) {
 	$.runSequence(
 		'clean:public',
 		'templates',
+		'styles',
 		callback);
 });
+
+gulp.task('default', ['build']);
+
 gulp.task('serve', function(callback) {
 	$.runSequence(
-		'clean:public',
-		'templates',
+		'build',
 		'watch',
 		callback);
 });

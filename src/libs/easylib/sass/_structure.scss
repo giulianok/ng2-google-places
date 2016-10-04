@@ -1,0 +1,157 @@
+/// Prefix
+/// @access public
+/// @param {String} $prefix - Block's prefix
+@mixin prefix($prefix) {
+	.#{$prefix} {
+		@content;
+	}
+}
+
+/// Block
+/// @access public
+/// @param {String[]} $blocks - Array of Blocks' name
+@mixin block($blocks...) {
+	@each $block in $blocks {
+		@if & {
+			$pre: map-get($bem-config, "prefix");
+			&#{$pre}#{$block} {
+				@content;
+			}
+		} @else {
+			.#{$block} {
+				@content;
+			}
+		}
+	}
+}
+
+
+/// Block Element
+/// @access public
+/// @param {String[]} $elements - Array of Elements' name
+@mixin element($elements...) {
+	@each $element in $elements {
+		&#{map-get($bem-config, "element")}#{$element} {
+			@content;
+		}
+	}
+}
+
+/// Block Modifier
+/// @access public
+/// @param {String[]} $modifiers - Array of Modifier's name
+@mixin modifier($modifiers...) {
+	@each $modifier in $modifiers {
+		&#{map-get($bem-config, "modifier")}#{$modifier} {
+			@content;
+		}
+	}
+}
+
+
+/// Concatenate two Modifiers
+/// @access public
+/// @param {String} $m1 - First Modifier
+/// @param {String} $m2 - Concatenated Modifier
+/// Example: .prefix-block__element--large.prefix-block__element--active
+@mixin modifier-has-modifier($m1, $m2) {
+	$m1: map-get($bem-config, "modifier") + $m1;
+	$m2: map-get($bem-config, "modifier") + $m2;
+	&#{$m1}#{&}#{$m2} {
+		@content;
+	}
+}
+
+
+/// Special selector (Elements or Modifiers)
+/// @access public
+/// @param {String} $selector - Complete selector (example: .first + .second)
+/// @param {String} $delimiter - Delimiter used in $selector (example: +)
+@mixin multi-selector($selector, $delimiter:'') {
+	// If the delimiter is empty, we try to find it inside of the $selector
+	@if str-length($delimiter) == 0 {
+		$i: 0;
+		@while $i < str-length($selector) {
+			@if $i>0 {
+				$char: str-slice($selector, $i, $i);
+				@if $char == ' ' AND $delimiter == '' {
+					$delimiter: str-slice($selector, $i+1, $i+1);
+				}
+			}
+			$i: $i+1;
+		}
+	}
+
+	// If we got $delimiter, we build the selector
+	@if str-length($delimiter) > 0 {
+		$split: str-explode($selector, $delimiter);
+		$result:'';
+		$index: 0;
+		@each $s in $split {
+			$result: $result + '&__' + str-trim($s);
+			@if $index == 0 {
+				$result: $result + $delimiter;
+			}
+			$index: $index+1;
+		}
+		#{$result} {
+			@content;
+		}
+	}
+
+}
+
+
+
+// SHORTCUTS
+@mixin b($blocks) {
+	@include block($blocks) {
+		@content;
+	}
+}
+@mixin e($elements) {
+	@include element($elements) {
+		@content;
+	}
+}
+@mixin m($modifiers) {
+	@include modifier($modifiers) {
+		@content;
+	}
+}
+@mixin m-has-m($modifiers) {
+	@include modifier-has-modifier($modifiers) {
+		@content;
+	}
+}
+
+
+
+@function build-bem-name($block:'', $element:'', $modifier:'', $prefix:'') {
+	@if $modifier == null OR $modifier == '' {
+
+		@warn "Please provide a Modifier name";
+		@return null;
+
+	} @else {
+
+		@if $block == null OR $block == '' {
+			@warn "Please provide a Block name";
+		} @else {
+			$name: $block;
+
+			@if $element != null AND $element != '' {
+				$name: $name + map-get($bem-config, "element") + $element;
+			}
+
+			@if $prefix != null AND $prefix != '' {
+				$name: $prefix + map-get($bem-config, "prefix") + $name;
+			}
+
+			$name: $name + map-get($bem-config, "modifier") + $modifier;
+
+			@return $name;
+		}
+
+	}
+}

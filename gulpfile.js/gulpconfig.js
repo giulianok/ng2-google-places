@@ -20,6 +20,13 @@ const configuration = {
 		dest: `${folder.public}`
 	},
 
+	styles: {
+		src: `${folder.app}/scss/*.scss`,
+		listening: `${folder.app}/scss/**/*.scss`,
+		dest: `${folder.public}/css`,
+		inject: 'Changed on the bottom'
+	},
+
 	clean: {
 		public: `${folder.public}/templates`
 	},
@@ -36,6 +43,10 @@ const configuration = {
 	}
 
 };
+
+configuration.styles.inject = [
+	folder.app + '/components/**/*.scss'
+];
 
 
 module.exports = configuration;

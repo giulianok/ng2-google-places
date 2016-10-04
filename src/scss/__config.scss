@@ -1,0 +1,9 @@
+// BEM
+
+@import "../libs/easylib/sass/easysass";
+
+$bem-config: (
+	"prefix": "-",
+	"element": "__",
+	"modifier": "--"
+);
