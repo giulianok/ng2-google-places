@@ -1,1 +1,38 @@
-h1 Testing
+include ../../libs/easylib/bemto/easybem
+
++bemto_scope({prefix:'app-'})
+
+    +b.map
+        //+e.overlay
+
+        +b.loading(*ngIf="loading")
+            +e.wrapper
+                +e.IMG.icon(src="/assets/images/loader-map.gif", alt="Loading Map")
+                +e.message(*ngIf="loadingMessage") {{loadingMessage}}
+
+        +b.error(*ngIf="errorMessage") {{errorMessage}}
+            +e.A.close(href="#", (click)="errorMessage = null", aria-label="Close error message", title="Close error message")
+
+
+        +b.query(*ngIf="!loading")
+            +e.INPUT.input(type="text", placeholder="Search", name="searchText", [(ngModel)]="searchText", [ngModelOptions]="{standalone: true}")
+            +e.A.button(href="#", title="Search", (click)="onSearch()")
+                img(src="/assets/images/search-icon.svg", alt="Search Icon")
+
+        +b.A.showHide(href="#", *ngIf="results", (click)="showList = !showList") {{ (showList) ? 'Hide List' : 'Show List' }}
+
+        +b.results(*ngIf="showList")
+            +b.UL.list
+                +e.LI.item(*ngFor="let result of results")
+                    +b.A.list-button(href="#")
+                        +e.content._photo
+                            +e.photo(*ngIf="result.photos", [ngStyle]="{'background-image': 'url(' + result.photos[0].getUrl({maxWidth:100}) + ')'}")
+                            +e.photo(*ngIf="!result.photos")
+                        +e.content
+                            +e.name {{result.name}}
+                            +b.UL.details
+                                +e.LI.item._priceLevel(*ngIf="result.price_level") {{getPriceLevel(result.price_level)}}
+                                +e.LI.item._rating(*ngIf="result.rating", [ngClass]="{'app-details__item--red': (result.rating < 2), 'app-details__item--yellow': (result.rating < 4)}") {{result.rating}}
+
+
+        +e.container#map

@@ -1,4 +1,7 @@
 include libs/easylib/bemto/easybem
+
+-var googleApi = 'AIzaSyDd417_SPmf1gQr_b_OG1pBov0LMEW2wow'
+
 doctype html
 html(lang='en')
     head
@@ -8,12 +11,14 @@ html(lang='en')
         link(rel="stylesheet", href="/css/reset.css")
         link(rel="stylesheet", href="/css/main.css")
 
+        script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=#{googleApi}&libraries=places")
         script(src="/js/vendor.bundle.js")
 
 
     body
 
-        app Loading App
+        +b.layout
+            app Loading App
 
 
 

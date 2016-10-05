@@ -22,13 +22,22 @@ const configuration = {
 
 	styles: {
 		src: `${folder.app}/scss/*.scss`,
-		listening: `${folder.app}/scss/**/*.scss`,
+		listening: [
+			`${folder.app}/scss/**/*.scss`,
+			`${folder.app}/components/**/*.scss`
+		],
 		dest: `${folder.public}/css`,
 		inject: 'Changed on the bottom'
 	},
 
+	assets: {
+		src: `${folder.app}/assets/**/*`,
+		listening: `${folder.app}/assets/**/*`,
+		dest: `${folder.public}/assets`
+	},
+
 	clean: {
-		public: `${folder.public}/templates`
+		public: `${folder.public}`
 	},
 
 	/* Plugins */

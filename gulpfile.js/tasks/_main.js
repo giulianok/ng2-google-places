@@ -13,6 +13,14 @@ gulp.task('watch', function () {
 	    gulp.start('templates');
 	});
 
+	$.watch(config.styles.listening, function () {
+	    gulp.start('styles');
+	});
+
+	$.watch(config.assets.listening, function () {
+	    gulp.start('assets');
+	});
+
 });
 
 
@@ -23,6 +31,7 @@ gulp.task('build', function(callback) {
 		'clean:public',
 		'templates',
 		'styles',
+		'assets',
 		callback);
 });
 
