@@ -14,9 +14,9 @@ include ../../libs/easylib/bemto/easybem
             +e.A.close(href="#", (click)="errorMessage = null", aria-label="Close error message", title="Close error message")
 
 
-        +b.query(*ngIf="!loading")
+        +b.FORM.query(*ngIf="!loading", (ngSubmit)="onSearch()")
             +e.INPUT.input(type="text", placeholder="Search", name="searchText", [(ngModel)]="searchText", [ngModelOptions]="{standalone: true}")
-            +e.A.button(href="#", title="Search", (click)="onSearch()")
+            +e.BUTTON.button(type="submit", title="Search")
                 img(src="/assets/images/search-icon.svg", alt="Search Icon")
 
         +b.A.showHide(href="#", *ngIf="results", (click)="showList = !showList") {{ (showList) ? 'Hide List' : 'Show List' }}
@@ -31,8 +31,8 @@ include ../../libs/easylib/bemto/easybem
                         +e.content
                             +e.name {{result.name}}
                             +b.UL.details
-                                +e.LI.item._priceLevel(*ngIf="result.price_level") {{getPriceLevel(result.price_level)}}
                                 +e.LI.item._rating(*ngIf="result.rating", [ngClass]="{'app-details__item--red': (result.rating < 2), 'app-details__item--yellow': (result.rating < 4)}") {{result.rating}}
+                                +e.LI.item._priceLevel(*ngIf="result.price_level") {{getPriceLevel(result.price_level)}}
 
 
         +e.container#map

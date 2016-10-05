@@ -243,7 +243,7 @@
 			}
 
 			@include modifier('priceLevel', 'red') {
-				color: $color-red;
+				font-weight: normal;
 			}
 
 			@include modifier('rating') {
@@ -252,6 +252,10 @@
 
 			@include modifier('yellow') {
 				color: $color-yellow;
+			}
+
+			@include modifier('red') {
+				color: $color-red;
 			}
 		}
 	}
