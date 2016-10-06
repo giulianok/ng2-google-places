@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm i && typings install && npm run serve",
+    "start": "npm i && typings install && gulp && webpack && lite-server",
     "serve": "concurrently \"webpack --watch\" \"lite-server\" \"gulp serve\"",
     "lite": "lite-server",
     "typings": "typings install",
