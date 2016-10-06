@@ -10,13 +10,6 @@ body {
 	background-color: $color-white;
 }
 
-@include block('layout') {
-	width: 400px;
-	height: 600px;
-	border: dashed 1px red;
-	margin: 50px auto;
-}
-
 
 // inject:scss
 // endinject
