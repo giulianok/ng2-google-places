@@ -29,6 +29,8 @@ export class GooglePlacesComponent implements AfterViewInit {
     infoWindow:google.maps.InfoWindow;
     markers:google.maps.Marker[] = [];
     selectedPlace:number;
+    private radius:number = 500;
+    private zoom:number = 15;
 
     constructor() {
         console.log('dada');
@@ -72,7 +74,7 @@ export class GooglePlacesComponent implements AfterViewInit {
     createMap(location:google.maps.LatLng):void {
         this.map = new google.maps.Map(document.getElementById('map'), {
             center: location,
-            zoom: 15,
+            zoom: this.zoom,
             mapMaker: true,
             streetViewControl: false,
             mapTypeControl: false,
@@ -166,13 +168,12 @@ export class GooglePlacesComponent implements AfterViewInit {
             const request:google.maps.places.TextSearchRequest = {
                 query: this.searchText,
                 location: this.map.getCenter(),
-                radius: .001
+                radius: this.radius
             };
 
             this.servicePlaces.textSearch(request, (results:IPlaceResult[]) => {
-                console.log('Found', results.length);
                 console.log(results);
-                resolve(results);
+                resolve( results );
             });
         });
     }
@@ -199,5 +200,4 @@ export class GooglePlacesComponent implements AfterViewInit {
         }
         return price;
     }
-
 }
