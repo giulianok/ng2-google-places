@@ -23,7 +23,7 @@ npm start
 
 In case you're using Mac and you have troubles installing node dependencies, I recommend the following commands
 ```sh
-sudo npm start
+sudo npm install
 npm run typings
 npm run serve
 ```
