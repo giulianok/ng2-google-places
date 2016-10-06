@@ -10,6 +10,7 @@
 	height: 100%;
 
 	@include block('map') {
+		width: 100%;
 		height: 100%;
 
 		@include element('overlay') {
@@ -19,10 +20,7 @@
 			top: 0;
 			left: 0;
 			z-index: 1;
-
-			//@include modifier('active') {
-				background-color: transparentize(black, .4);
-			//}
+			background-color: transparentize(black, .4);
 		}
 
 		@include element('container') {
@@ -34,7 +32,7 @@
 	@include block('error') {
 		position: absolute;
 		width: 100%;
-		top: 0;
+		top: 60px;
 		left: 0;
 		opacity: .8;
 		z-index: 2;

@@ -94,13 +94,10 @@ export class GooglePlacesComponent implements AfterViewInit {
 
     onSearch():void {
         if (!this.searchText) {
-
             this.errorMessage = 'Please enter a word, ex: Pizza';
-
         } else {
-
+            this.errorMessage = null;
             this.loading = true;
-
             this.findPlaces()
                 .then((results: IPlaceResult[]) => {
                     this.loading = false;

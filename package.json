@@ -6,7 +6,7 @@
     "start": "npm i && typings install && npm run serve",
     "serve": "concurrently \"webpack --watch\" \"lite-server\" \"gulp serve\"",
     "lite": "lite-server",
-    "typings": "typings",
+    "typings": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "webpack": "webpack --watch",
