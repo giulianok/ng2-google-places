@@ -7,7 +7,7 @@ include ../../libs/easylib/bemto/easybem
 
         +b.loading(*ngIf="loading")
             +e.wrapper
-                +e.IMG.icon(src="/assets/images/loader-map.gif", alt="Loading Map")
+                +e.IMG.icon(src="assets/images/loader-map.gif", alt="Loading Map")
                 +e.message(*ngIf="loadingMessage") {{loadingMessage}}
 
         +b.error(*ngIf="errorMessage") {{errorMessage}}
@@ -17,7 +17,7 @@ include ../../libs/easylib/bemto/easybem
         +b.FORM.query(*ngIf="!loading", (ngSubmit)="onSearch()")
             +e.INPUT.input(type="text", placeholder="Search", name="searchText", [(ngModel)]="searchText", [ngModelOptions]="{standalone: true}")
             +e.BUTTON.button(type="submit", title="Search")
-                img(src="/assets/images/search-icon.svg", alt="Search Icon")
+                img(src="assets/images/search-icon.svg", alt="Search Icon")
 
         +b.A.showHide(href="#", *ngIf="results", (click)="showList = !showList") {{ (showList) ? 'Hide List' : 'Show List' }}
 

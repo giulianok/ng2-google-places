@@ -217,7 +217,7 @@
 			height: 50px;
 			background-position: center center;
 			background-size: cover;
-			background-image: url('/assets/images/no-photo.png');
+			background-image: url('../assets/images/no-photo.png');
 		}
 
 		@include element('name') {
