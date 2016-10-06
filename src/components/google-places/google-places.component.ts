@@ -1,10 +1,12 @@
-import {Component, AfterViewInit} from "@angular/core";
+import {Component, AfterViewInit, Injectable} from "@angular/core";
 import {getComponentTemplate} from "../../utilities/get-component-template.function";
 import {ILatLong} from "../../utilities/interfaces/latLong.interface";
 import ControlPosition = google.maps.ControlPosition;
 import {NgModel} from "@angular/forms";
 import {NgStyle, NgClass} from "@angular/common";
 import {IPlaceResult} from "../../utilities/interfaces/placeResult.interface";
+import {Http} from "@angular/http";
+import 'rxjs/Rx';
 
 @Component({
     selector: 'google-places',
@@ -15,8 +17,13 @@ import {IPlaceResult} from "../../utilities/interfaces/placeResult.interface";
         NgClass
     ]
 })
+
+@Injectable()
 export class GooglePlacesComponent implements AfterViewInit {
 
+    private api:string = 'AIzaSyDd417_SPmf1gQr_b_OG1pBov0LMEW2wow';
+    private radius:number = 500;
+    private zoom:number = 15;
     showList:boolean = false;
     errorMessage:string;
     loading:boolean = true;
@@ -29,10 +36,8 @@ export class GooglePlacesComponent implements AfterViewInit {
     infoWindow:google.maps.InfoWindow;
     markers:google.maps.Marker[] = [];
     selectedPlace:number;
-    private radius:number = 500;
-    private zoom:number = 15;
 
-    constructor() {
+    constructor(private http:Http) {
         console.log('dada');
         this.defaultLatLong = {
             lat: 25.8140921,
@@ -61,13 +66,47 @@ export class GooglePlacesComponent implements AfterViewInit {
                     });
                 }, (err) => {
                     console.error(err);
-                    this.errorMessage = `Unable to retrieve your location. Default will be used`;
-                    resolve(this.defaultLatLong);
+                    this.getGeolocationFromGoogle()
+                        .then((data) => {
+                            resolve({
+                                lat: data.location.lat,
+                                long: data.location.lng
+                            });
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                            this.errorMessage = `Unable to retrieve your location. Default will be used`;
+                            resolve(this.defaultLatLong);
+                        });
                 })
 
             } else {
-                resolve(this.defaultLatLong);
+                this.getGeolocationFromGoogle()
+                    .then((data) => {
+                        resolve({
+                            lat: data.location.lat,
+                            long: data.location.lng
+                        });
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        this.errorMessage = `Unable to retrieve your location. Default will be used`;
+                        resolve(this.defaultLatLong);
+                    });
             }
+        });
+    }
+
+    getGeolocationFromGoogle():Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.http.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${this.api}`, null)
+                .map(res => res.json())
+                .catch((err) => {
+                    reject();
+                })
+                .subscribe((res) => {
+                    resolve(res);
+                });
         });
     }
 

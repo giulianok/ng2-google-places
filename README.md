@@ -5,7 +5,9 @@ This is a Prototype of Google Place using Angular2 (and Typescript).
 The following structure BEM strucutre (based on Jade and Sass) was used:
 https://github.com/giulianok/easy-bem-structure
 
-The Prototype uses Geolocation, in case your browser blocks that, it'll use a default position.
+The Prototype uses Geolocation, in case your browser blocks that, it'll use Google Geolocation API.
+
+[DEMO](http://bostwickworks.com/ng2-google-places/)
 
 `Once you built the prototype, you CANNOT run index.html (from _public folder) as a file`
 
